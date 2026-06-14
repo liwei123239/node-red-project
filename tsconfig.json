@@ -1,0 +1,6 @@
+{
+  "extends": "@node-red-project/config/tsconfig.base.json",
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
