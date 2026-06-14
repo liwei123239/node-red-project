@@ -1,4 +1,4 @@
-import { initTRPC, TRPCError } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 
 import type { Context } from "./context";
 
@@ -22,4 +22,18 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
       session: ctx.session,
     },
   });
+});
+
+export const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.role !== "admin") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+  }
+  return next({ ctx });
+});
+
+export const researcherProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (ctx.role !== "admin" && ctx.role !== "researcher") {
+    throw new TRPCError({ code: "FORBIDDEN", message: "Researcher access required" });
+  }
+  return next({ ctx });
 });

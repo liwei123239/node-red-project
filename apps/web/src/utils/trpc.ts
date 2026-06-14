@@ -1,13 +1,21 @@
 import type { AppRouter } from "@node-red-project/api/routers/index";
 import { env } from "@node-red-project/env/web";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { createTRPCClient, httpBatchStreamLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { toast } from "sonner";
+
+const getServerUrl = (): string => {
+  if (env.VITE_SERVER_URL) {
+    return env.VITE_SERVER_URL;
+  }
+  return globalThis.location.origin;
+};
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
+      if ((error as { data?: { code?: string } }).data?.code === "FORBIDDEN") return;
       toast.error(error.message, {
         action: {
           label: "retry",
@@ -22,8 +30,8 @@ export const queryClient = new QueryClient({
 
 export const trpcClient = createTRPCClient<AppRouter>({
   links: [
-    httpBatchLink({
-      url: `${env.VITE_SERVER_URL}/trpc`,
+    httpBatchStreamLink({
+      url: `${getServerUrl()}/trpc`,
       fetch(url, options) {
         return fetch(url, {
           ...options,

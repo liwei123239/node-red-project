@@ -1,6 +1,7 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
 import { authClient } from "@/lib/auth-client";
+import { AiPanel } from "@/components/ai-assistant/AiPanel";
 
 export const Route = createFileRoute("/_auth")({
   component: AuthLayout,
@@ -11,10 +12,15 @@ export const Route = createFileRoute("/_auth")({
         to: "/login",
       });
     }
-    return { session };
+    return { session, role: null as string | null };
   },
 });
 
 function AuthLayout() {
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <AiPanel />
+    </>
+  );
 }

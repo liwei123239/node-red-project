@@ -6,6 +6,10 @@ import { defineConfig } from "vite";
 export default defineConfig({
   server: {
     port: 3001,
+    proxy: {
+      "/trpc": "http://localhost:3000",
+      "/api": "http://localhost:3000",
+    },
   },
   resolve: {
     tsconfigPaths: true,

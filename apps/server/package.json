@@ -4,9 +4,11 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsdown",
+    "build:lambda": "tsdown src/lambda.ts --out-dir dist-lambda --format esm --platform node --target node22 --clean",
     "check-types": "tsc -b",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
     "dev": "tsx watch src/index.ts",
+    "seed": "tsx src/scripts/seed.ts",
     "start": "node dist/index.mjs"
   },
   "dependencies": {
@@ -15,6 +17,7 @@
     "@node-red-project/api": "workspace:*",
     "@node-red-project/auth": "workspace:*",
     "@node-red-project/db": "workspace:*",
+    "drizzle-orm": "catalog:",
     "@node-red-project/env": "workspace:*",
     "@trpc/server": "catalog:",
     "better-auth": "catalog:",
