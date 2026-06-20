@@ -4,7 +4,7 @@
       {
         "hooks": [
           {
-            "command": "pnpm run fix --skip=correctness/noUnusedImports",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format-edited-file.mjs\"",
             "type": "command"
           }
         ],
