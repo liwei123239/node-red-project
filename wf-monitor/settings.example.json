@@ -1,0 +1,36 @@
+{
+  "$comment": "把这段 hooks 合并到你项目的 .claude/settings.json。把 /ABSOLUTE/PATH 换成 wf-report.sh 的真实路径,或用 $CLAUDE_PROJECT_DIR。",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "WF_MATCH=yd: /ABSOLUTE/PATH/wf-monitor/wf-report.sh start"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/ABSOLUTE/PATH/wf-monitor/wf-report.sh step"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/ABSOLUTE/PATH/wf-monitor/wf-report.sh done"
+          }
+        ]
+      }
+    ]
+  }
+}

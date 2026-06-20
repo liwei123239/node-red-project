@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "WF_TOKEN=mysecret WF_MATCH=yd: /Users/levy/Documents/workspace/node-red-project/wf-monitor/wf-report.sh start",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "pnpm run fix --skip=correctness/noUnusedImports",
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit"
+      },
+      {
+        "hooks": [
+          {
+            "command": "WF_TOKEN=mysecret /Users/levy/Documents/workspace/node-red-project/wf-monitor/wf-report.sh step",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "WF_TOKEN=mysecret /Users/levy/Documents/workspace/node-red-project/wf-monitor/wf-report.sh done",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}
